@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+  <title> Gestion des Etudiants</title>
+  <link href="style.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+   <div>
+       <h1> Liste des étudiants</h1>
+        
+        <h:form>
+        <p:dataTable value="#{personneEJB.pistePersonne}" var ="e" 
+          style = "width: 70%; margin:auto;">
+         <p:column>
+          <f:facet name="header">Id</f:facet>
+          #{e.id}
+          </p:column>
+          <p:column>
+          <f:facet name="header">Nom</f:facet>
+          #{e.nom}
+          </p:column>
+          <p:column>
+          <f:facet name="header">Prenom</f:facet>
+          #{e.prenom}
+          </p:column>
+          <p:column>
+          <f:facet name="header">Date de Naissance</f:facet>
+          #{e.datenaiss}
+          </p:column>
+        <p:column colspan="2">
+          <f:facet name="header">Operation</f:facet>
+          <div class="row box-space-top">
+           <h:panelGroup styleClass="Label">
+             <h:commandLink action ="#{personneEJB.deletePersonne(e)}" value="Supprimer" />
+           </h:panelGroup><br/>
+           <h:panelGroup styleClass="field">
+            <h:commandLink action="#{personneEJB.affiche(e)}" value="Modifier" />
+           </h:panelGroup>
+          </div>
+        </p:column>
+        </p:dataTable>
+        </h:form>
+        
+        <div class="#{personneEJB.modif?'cache':'null'}">
+         <h1> Creer un etudiant</h1>
+         <h:form>
+         <h:panelGrid column="2" cellpadding="3">
+         
+           <h:message for="username1"/><br/>
+           <p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+           <p:inputText id="username1" styleClass="block" value="#{personneEJB.personne.nom}" a:placeholder="votre nom" 
+           validateMessage="Entrer votre nom." rendered="true"/>
+           </h:message>
+         
+           <h:message for="username2"/><br/>
+           <p:outputLabel for="username2" styleClass="block">Nom</p:outputLabel>
+           <p:inputText id="username2" styleClass="block" value="#{personneEJB.personne.prenom}" a:placeholder="votre prenom" 
+           validateMessage="Entrer votre Prenom." required="true"/>
+           </h:message>
+           
+             <h:message for="datenaiss"/><br/>
+           <p:outputLabel for="dateNais" styleClass="block">Date de naissance</p:outputLabel>
+           <p:calendar id="dateNais" styleClass="block" value="#{personneEJB.date}" required="true" a:placeholder="votre date de naissance" 
+           pattern="yyyy-MM-dd" mode="popup" showOn ="button" validateMessage="Entrer votre date de naissance.">
+           </p:calendar>
+           <h:commandButton action="#{personneEJB.ajoutPersonne()}"
+            value="Ajouter un étudiant" />
+           </h:message>
+           
+         </h:panelGrid>
+         </h:form>
+        </div>
+        
+        <div class="#{personneEJB.modif?'null':'cache'}">
+         <h1> Editer un etudiant</h1>
+         <h:form>
+         <h:panelGrid column="2" cellpadding="3">
+         
+           <h:message for="username1"/><br/>
+           <p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+           <p:inputText id="username1" styleClass="block" value="#{personneEJB.personne.nom}" a:placeholder="votre nom" 
+           validateMessage="Entrer votre nom." rendered="true"/>
+           </h:message>
+         
+           <h:message for="username2"/><br/>
+           <p:outputLabel for="username2" styleClass="block">Nom</p:outputLabel>
+           <p:inputText id="username2" styleClass="block" value="#{personneEJB.personne.prenom}" a:placeholder="votre prenom" 
+           validateMessage="Entrer votre Prenom." required="true"/>
+           </h:message>
+           
+             <h:message for="datenaiss"/><br/>
+           <p:outputLabel for="dateNais" styleClass="block">Date de naissance</p:outputLabel>
+           <p:calendar id="dateNais" styleClass="block" value="#{personneEJB.date}" required="true" a:placeholder="votre date de naissance" 
+           pattern="yyyy-MM-dd" mode="popup" showOn ="button" validateMessage="Entrer votre date de naissance.">
+           </p:calendar>
+           <h:commandButton action="#{personneEJB.modifPersonne()}"
+            value="modifier un étudiant" />
+           </h:message>
+           
+         </h:panelGrid>
+         </h:form>
+        </div>
+        
+   </div>
+</h:body>
+</html>
